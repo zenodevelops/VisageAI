@@ -1,37 +1,151 @@
+/* Saved Faces Section */
+
 #savedFaces {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#savedFaces h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #007BFF;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+#savedFacesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#savedFacesList li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#savedFacesList li:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#savedFacesList li img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #007BFF;
+}
+
+#savedFacesList li span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Save Face Button */
+#saveFaceBtn {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    background-color: white;
-    width: 200px;
-    border-left: 1px solid #ccc;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  #savedFaces h3 {
-    margin: 0 0 10px 0;
+    bottom: 20px; /* Adjust the vertical positioning */
+    left: 50%; /* Center horizontally based on the container */
+    transform: translateX(-50%); /* Correct horizontal alignment */
+    padding: 10px 20px;
     font-size: 18px;
-    text-align: center;
-  }
-  
-  #savedFacesList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #savedFacesList li {
-    padding: 5px;
-    font-size: 16px;
-    color: #333;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-    #saveFaceBtn{
-        position: absolute;
-        bottom: 20px;
-    }
+#saveFaceBtn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Video Section */
+#video {
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar Styling for Saved Faces List */
+#savedFacesList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#savedFacesList::-webkit-scrollbar-thumb {
+  background-color: #007BFF;
+  border-radius: 8px;
+}
+
+#savedFacesList::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+/* Overall Layout */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f4f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #007BFF;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #savedFaces {
+    width: 200px;
+    font-size: 14px;
+  }
+
+  #saveFaceBtn {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  #savedFacesList li {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  #savedFacesList li img {
+    width: 40px;
+    height: 40px;
+  }
+}
