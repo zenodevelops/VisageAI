@@ -1,6 +1,7 @@
-const video = document.getElementById('video');
+=const video = document.getElementById('video');
 const knownFaceDescriptors = [];
 const knownFaceNames = [];
+let showExpressions = false;
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -16,6 +17,38 @@ function startVideo() {
     })
     .catch(err => console.error('Error accessing the camera:', err));
 }
+
+// Added button to toggle expressions
+const toggleSwitchContainer = document.createElement('div');
+toggleSwitchContainer.style.position = 'absolute';
+toggleSwitchContainer.style.top = '10px';
+toggleSwitchContainer.style.left = '50%';
+toggleSwitchContainer.style.transform = 'translateX(-50%)';
+toggleSwitchContainer.style.display = 'flex';
+toggleSwitchContainer.style.alignItems = 'center';
+toggleSwitchContainer.style.gap = '10px';
+
+// Add label for the toggle 
+const toggleLabel = document.createElement('span');
+toggleLabel.textContent = 'Show Expression';
+toggleLabel.style.fontSize = '16px';
+toggleLabel.style.color = '#007BFF';
+toggleSwitchContainer.appendChild(toggleLabel);
+
+// Add the toggle input 
+const toggleSwitch = document.createElement('input');
+toggleSwitch.type = 'checkbox';
+toggleSwitch.style.width = '40px';
+toggleSwitch.style.height = '20px';
+toggleSwitch.style.cursor = 'pointer';
+toggleSwitchContainer.appendChild(toggleSwitch);
+
+document.body.appendChild(toggleSwitchContainer);
+
+// Toggle functionality for expressions 
+toggleSwitch.addEventListener('change', () => {
+  showExpressions = toggleSwitch.checked;
+});
 
 const saveFaceBtn = document.getElementById('saveFaceBtn');
 
@@ -93,7 +126,7 @@ saveFaceBtn.addEventListener('click', async () => {
     nameInput.style.borderRadius = '4px';
     nameInput.style.width = '100%';
     inputSection.appendChild(nameInput);
-    
+
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
     saveButton.style.padding = '10px';
@@ -103,21 +136,17 @@ saveFaceBtn.addEventListener('click', async () => {
     saveButton.style.borderRadius = '4px';
     saveButton.style.cursor = 'pointer';
     saveButton.style.width = '100%';
-    
+
     saveButton.addEventListener('mouseover', () => {
       saveButton.style.backgroundColor = '#0056b3';
     });
-    
+
     saveButton.addEventListener('mouseout', () => {
       saveButton.style.backgroundColor = '#007BFF';
     });
-    
+
     inputSection.appendChild(saveButton);
-    
-
-
     previewDialog.appendChild(inputSection);
-
     document.body.appendChild(previewDialog);
 
     // Wait for the user to name the face
@@ -135,6 +164,7 @@ saveFaceBtn.addEventListener('click', async () => {
           listItem.style.display = 'flex';
           listItem.style.alignItems = 'center';
           listItem.style.marginBottom = '10px';
+          listItem.style.position = 'relative'; // For positioning the remove button
 
           const img = document.createElement('img');
           img.src = imageData;
@@ -146,8 +176,47 @@ saveFaceBtn.addEventListener('click', async () => {
           const nameText = document.createElement('span');
           nameText.textContent = name;
 
+          // Remove Button
+          const removeButton = document.createElement('button');
+          removeButton.textContent = 'Remove';
+          removeButton.style.position = 'absolute';
+          removeButton.style.right = '10px';
+          removeButton.style.padding = '5px 10px';
+          removeButton.style.fontSize = '12px';
+          removeButton.style.color = '#fff';
+          removeButton.style.backgroundColor = '#FF0000';
+          removeButton.style.border = 'none';
+          removeButton.style.borderRadius = '4px';
+          removeButton.style.cursor = 'pointer';
+          removeButton.style.opacity = '0'; //Initially hidden
+          removeButton.style.transition = 'opacity 0.3s ease';
+
+          // Showing remove button on hover
+          listItem.addEventListener('mouseover', () => {
+            removeButton.style.opacity = '1';
+          });
+          listItem.addEventListener('mouseout', () => {
+            removeButton.style.opacity = '0';
+          });
+
+          // Removing the face on button click
+          removeButton.addEventListener('click', () => {
+            const confirmDeletion = confirm(`Are you sure you want to remove ${name}?`);
+            if (confirmDeletion) {
+              savedFacesList.removeChild(listItem);
+              const index = knownFaceNames.indexOf(name);
+              if (index > -1) {
+                knownFaceNames.splice(index, 1);
+                knownFaceDescriptors.splice(index, 1);
+              }
+
+              alert(`${name} has been removed.`);
+            }
+          });
+
           listItem.appendChild(img);
           listItem.appendChild(nameText);
+          listItem.appendChild(removeButton);
           savedFacesList.appendChild(listItem);
 
           alert(`Face saved for ${name}!`);
@@ -156,7 +225,7 @@ saveFaceBtn.addEventListener('click', async () => {
           return;
         }
 
-        document.body.removeChild(previewDialog); // Close dialog
+        document.body.removeChild(previewDialog); // closing dialog
         resolve(); // Continue to the next face
       });
     });
@@ -164,10 +233,6 @@ saveFaceBtn.addEventListener('click', async () => {
 
   alert('All faces saved successfully!');
 });
-
-
-
-
 
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video);
@@ -180,38 +245,40 @@ video.addEventListener('play', () => {
       .withFaceLandmarks()
       .withFaceDescriptors()
       .withFaceExpressions();
-  
+
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-  
+
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
-  
-    // Drawing bounding boxes, landmarks, and expressions
-    faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-  
+
     // Recognizing faces and display names
     resizedDetections.forEach(detection => {
+      const box = detection.detection.box;
+    
+      // Handle names only if there are saved faces
+      let text = "Unknown";
       if (knownFaceDescriptors.length > 0) {
         const labeledDescriptors = knownFaceDescriptors.map((desc, i) => {
           return new faceapi.LabeledFaceDescriptors(knownFaceNames[i], [desc]);
         });
-      
+    
         const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
-      
         const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
-        const box = detection.detection.box;
-      
-        // Drawing name or "Unknown" above the bounding box
-        context.font = '16px Arial';
-        context.fillStyle = '#00FF00';
-        context.fillText(bestMatch.label === "unknown" ? "Unknown" : bestMatch.label, box.x, box.y - 10);
-      } else {
-        // If no faces are saved we show "No Faces Saved"
-        context.font = '16px Arial';
-        context.fillStyle = '#FF0000';
-        context.fillText("No Faces Saved", detection.detection.box.x, detection.detection.box.y - 10);
+        text = bestMatch.label === "unknown" ? "Unknown" : bestMatch.label;
+      }
+    
+      // Always show name or "No Faces Saved"
+      context.font = "bold 16px Arial";
+      context.fillStyle = "#00FF00";
+      const textWidth = context.measureText(text).width;
+      const xPosition = box.x + (box.width / 2) - (textWidth / 2);
+      context.fillText(text, xPosition, box.y - 10);
+    
+      // Always handle expressions, landmarks, and boxes if toggle is enabled
+      if (showExpressions) {
+        faceapi.draw.drawDetections(canvas, [detection]);
+        faceapi.draw.drawFaceLandmarks(canvas, [detection]);
+        faceapi.draw.drawFaceExpressions(canvas, [detection]);
       }
     });
   }, 100);
