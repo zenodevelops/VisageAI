@@ -21,53 +21,153 @@ const saveFaceBtn = document.getElementById('saveFaceBtn');
 
 // Saving face with its associate name
 saveFaceBtn.addEventListener('click', async () => {
-  const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+  const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
     .withFaceLandmarks()
-    .withFaceDescriptor();
+    .withFaceDescriptors();
 
-  if (!detection) {
-    alert('No face detected! Please ensure your face is visible to the camera.');
+  if (detections.length === 0) {
+    alert('No faces detected! Please ensure your face is visible to the camera.');
     return;
   }
 
-  const name = prompt('Enter your name:');
-  if (name) {
-    // Saving the descriptor and name
-    knownFaceDescriptors.push(detection.descriptor);
-    knownFaceNames.push(name);
+  for (let i = 0; i < detections.length; i++) {
+    const detection = detections[i];
+    const box = detection.detection.box;
 
-    // Capturing current frame as an image
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageData = canvas.toDataURL('image/png');
+    // Create a canvas to display the detected face for naming
+    const faceCanvas = document.createElement('canvas');
+    faceCanvas.width = box.width;
+    faceCanvas.height = box.height;
+    const faceCtx = faceCanvas.getContext('2d');
+    faceCtx.drawImage(
+      video,
+      box.x, box.y, box.width, box.height, // Source rectangle
+      0, 0, box.width, box.height // Destination rectangle
+    );
 
-    // Adding the name and image to the right-side list
-    const savedFacesList = document.getElementById('savedFacesList');
-    const listItem = document.createElement('li');
-    listItem.style.display = 'flex';
-    listItem.style.alignItems = 'center';
-    listItem.style.marginBottom = '10px';
+    // Create a dialog box for naming the face
+    const previewDialog = document.createElement('div');
+    previewDialog.style.position = 'absolute';
+    previewDialog.style.top = '50%';
+    previewDialog.style.left = '50%';
+    previewDialog.style.transform = 'translate(-50%, -50%)';
+    previewDialog.style.backgroundColor = '#fff';
+    previewDialog.style.border = '1px solid #ccc';
+    previewDialog.style.borderRadius = '8px';
+    previewDialog.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+    previewDialog.style.padding = '20px';
+    previewDialog.style.zIndex = '1000';
+    previewDialog.style.display = 'flex';
+    previewDialog.style.alignItems = 'center';
+    previewDialog.style.width = '400px';
 
-    const img = document.createElement('img');
-    img.src = imageData;
-    img.style.width = '40px';
-    img.style.height = '40px';
-    img.style.borderRadius = '50%';
-    img.style.marginRight = '10px';
+    // Left side: Face preview
+    const imagePreview = document.createElement('div');
+    imagePreview.style.flex = '1';
+    imagePreview.style.display = 'flex';
+    imagePreview.style.justifyContent = 'center';
+    imagePreview.style.alignItems = 'center';
+    imagePreview.style.padding = '10px';
+    imagePreview.style.overflow = 'hidden';
+    imagePreview.style.borderRadius = '8px';
+    imagePreview.style.backgroundColor = '#f5f5f5';
+    faceCanvas.style.width = '100px';
+    faceCanvas.style.height = '100px';
+    faceCanvas.style.borderRadius = '50%';
+    imagePreview.appendChild(faceCanvas);
+    previewDialog.appendChild(imagePreview);
 
-    const nameText = document.createElement('span');
-    nameText.textContent = name;
+    // Right side: Input and button
+    const inputSection = document.createElement('div');
+    inputSection.style.flex = '2';
+    inputSection.style.display = 'flex';
+    inputSection.style.flexDirection = 'column';
+    inputSection.style.gap = '10px';
+    inputSection.style.padding = '10px';
 
-    listItem.appendChild(img);
-    listItem.appendChild(nameText);
-    savedFacesList.appendChild(listItem);
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = `Enter name for face ${i + 1}`;
+    nameInput.style.padding = '10px';
+    nameInput.style.border = '1px solid #ccc';
+    nameInput.style.borderRadius = '4px';
+    nameInput.style.width = '100%';
+    inputSection.appendChild(nameInput);
+    
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.style.padding = '10px';
+    saveButton.style.backgroundColor = '#007BFF';
+    saveButton.style.color = '#fff';
+    saveButton.style.border = 'none';
+    saveButton.style.borderRadius = '4px';
+    saveButton.style.cursor = 'pointer';
+    saveButton.style.width = '100%';
+    
+    saveButton.addEventListener('mouseover', () => {
+      saveButton.style.backgroundColor = '#0056b3';
+    });
+    
+    saveButton.addEventListener('mouseout', () => {
+      saveButton.style.backgroundColor = '#007BFF';
+    });
+    
+    inputSection.appendChild(saveButton);
+    
 
-    alert(`Face saved for ${name}!`);
+
+    previewDialog.appendChild(inputSection);
+
+    document.body.appendChild(previewDialog);
+
+    // Wait for the user to name the face
+    await new Promise((resolve) => {
+      saveButton.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        if (name) {
+          knownFaceDescriptors.push(detection.descriptor);
+          knownFaceNames.push(name);
+
+          // Save face preview in the list
+          const imageData = faceCanvas.toDataURL('image/png');
+          const savedFacesList = document.getElementById('savedFacesList');
+          const listItem = document.createElement('li');
+          listItem.style.display = 'flex';
+          listItem.style.alignItems = 'center';
+          listItem.style.marginBottom = '10px';
+
+          const img = document.createElement('img');
+          img.src = imageData;
+          img.style.width = '40px';
+          img.style.height = '40px';
+          img.style.borderRadius = '50%';
+          img.style.marginRight = '10px';
+
+          const nameText = document.createElement('span');
+          nameText.textContent = name;
+
+          listItem.appendChild(img);
+          listItem.appendChild(nameText);
+          savedFacesList.appendChild(listItem);
+
+          alert(`Face saved for ${name}!`);
+        } else {
+          alert('Please enter a name for the face.');
+          return;
+        }
+
+        document.body.removeChild(previewDialog); // Close dialog
+        resolve(); // Continue to the next face
+      });
+    });
   }
+
+  alert('All faces saved successfully!');
 });
+
+
+
+
 
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video);
