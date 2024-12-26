@@ -1,4 +1,4 @@
-=const video = document.getElementById('video');
+const video = document.getElementById('video');
 const knownFaceDescriptors = [];
 const knownFaceNames = [];
 let showExpressions = false;
