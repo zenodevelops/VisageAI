@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
   <style>
@@ -25,5 +26,11 @@
 </head>
 <body>
   <video id="video" width="720" height="560" autoplay muted></video>
+  <button id="saveFaceBtn">Save Face</button>
+
+  <div id="savedFaces" style="position: absolute; top: 0; right: 0; padding: 10px; background-color: white; width: 200px; border-left: 1px solid #ccc;">
+    <h3>Saved Faces</h3>
+    <ul id="savedFacesList" style="list-style: none; padding: 0; margin: 0;"></ul>
+  </div>
 </body>
 </html>
