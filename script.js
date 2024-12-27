@@ -65,6 +65,26 @@ saveFaceBtn.addEventListener('click', async () => {
 
   for (let i = 0; i < detections.length; i++) {
     const detection = detections[i];
+
+
+     // Check if the face is already saved
+     if (knownFaceDescriptors.length > 0) {
+      const labeledDescriptors = knownFaceDescriptors.map((desc, index) => {
+        return new faceapi.LabeledFaceDescriptors(knownFaceNames[index], [desc]);
+      });
+
+      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
+      const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
+
+      if (bestMatch.label !== 'unknown') {
+        alert(`Face already saved as: ${bestMatch.label}`);
+        continue; // Skip saving this face
+      }
+    }
+
+
+
+
     const box = detection.detection.box;
 
     // Create a canvas to display the detected face for naming
