@@ -126,7 +126,26 @@ h1 {
   color: #007BFF;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+#uploadImageBtn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 
+#uploadImageBtn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   #savedFaces {
