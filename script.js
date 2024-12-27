@@ -455,3 +455,134 @@ video.addEventListener('play', () => {
     });
   }, 100);
 });
+
+// Existing code remains unchanged
+
+// Existing code remains unchanged
+
+
+
+
+
+// Initialize variables and DOM elements
+let alertMode = false; // Initialize alert mode
+let lastLogTimestamp = 0; // Initialize last log timestamp
+
+// Create container for alert mode toggle and log box
+const alertModeContainer = document.createElement('div');
+alertModeContainer.style.position = 'absolute';
+alertModeContainer.style.top = '10px';
+alertModeContainer.style.left = '10px';
+alertModeContainer.style.display = 'flex';
+alertModeContainer.style.flexDirection = 'column';
+alertModeContainer.style.gap = '10px';
+alertModeContainer.style.backgroundColor = '#f9f9f9';
+alertModeContainer.style.padding = '10px';
+alertModeContainer.style.border = '1px solid #ccc';
+alertModeContainer.style.borderRadius = '8px';
+alertModeContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+alertModeContainer.style.zIndex = '1000';
+document.body.appendChild(alertModeContainer);
+
+// Create alert mode checkbox and label
+const alertModeCheckbox = document.createElement('input');
+alertModeCheckbox.type = 'checkbox';
+alertModeCheckbox.id = 'alertModeCheckbox';
+const alertModeLabel = document.createElement('label');
+alertModeLabel.htmlFor = 'alertModeCheckbox';
+alertModeLabel.textContent = 'Enable Alert Mode';
+
+alertModeContainer.appendChild(alertModeCheckbox);
+alertModeContainer.appendChild(alertModeLabel);
+
+// Create log box
+const logBox = document.createElement('div');
+logBox.style.width = '200px';
+logBox.style.height = '300px';
+logBox.style.overflowY = 'auto';
+logBox.style.border = '1px solid #ddd';
+logBox.style.padding = '10px';
+logBox.style.borderRadius = '4px';
+logBox.style.backgroundColor = '#fff';
+alertModeContainer.appendChild(logBox);
+
+// Create clear logs button
+const clearLogsButton = document.createElement('button');
+clearLogsButton.textContent = 'Clear Logs';
+clearLogsButton.style.marginTop = '10px';
+clearLogsButton.style.padding = '5px 10px';
+clearLogsButton.style.border = '1px solid #ccc';
+clearLogsButton.style.borderRadius = '4px';
+clearLogsButton.style.backgroundColor = '#007BFF';
+clearLogsButton.style.color = '#fff';
+clearLogsButton.style.cursor = 'pointer';
+alertModeContainer.appendChild(clearLogsButton);
+
+clearLogsButton.addEventListener('click', () => {
+  logBox.innerHTML = ''; // Clear the log box
+});
+
+// Toggle alert mode on checkbox change
+alertModeCheckbox.addEventListener('change', () => {
+  alertMode = alertModeCheckbox.checked;
+});
+
+// Video face detection with alert and logging functionality
+video.addEventListener('play', () => {
+  const canvas = faceapi.createCanvasFromMedia(video);
+  document.body.append(canvas);
+  const displaySize = { width: video.width, height: video.height };
+  faceapi.matchDimensions(canvas, displaySize);
+
+  setInterval(async () => {
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks()
+      .withFaceDescriptors()
+      .withFaceExpressions();
+
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    resizedDetections.forEach((detection) => {
+      const box = detection.detection.box;
+      let text = 'Unknown';
+
+      if (knownFaceDescriptors.length > 0) {
+        const labeledDescriptors = knownFaceDescriptors.map((desc, i) => {
+          return new faceapi.LabeledFaceDescriptors(knownFaceNames[i], [desc]);
+        });
+
+        const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
+        const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
+        text = bestMatch.label === 'unknown' ? 'Unknown' : bestMatch.label;
+
+        if (alertMode && text !== 'Unknown') {
+          const currentTimestamp = Date.now();
+          if (currentTimestamp - lastLogTimestamp > 2000) {
+            // Add log to the log box
+            const logEntry = document.createElement('div');
+            logEntry.textContent = `${new Date().toLocaleTimeString()}: ${text} detected.`;
+            logBox.appendChild(logEntry);
+            logBox.scrollTop = logBox.scrollHeight;
+
+            lastLogTimestamp = currentTimestamp;
+          }
+        }
+      }
+
+      if (alertMode && text !== 'Unknown') {
+        context.lineWidth = 2;
+        context.strokeStyle = '#FF0000';
+        context.strokeRect(box.x, box.y, box.width, box.height);
+
+        context.font = 'bold 16px Arial';
+        context.fillStyle = '#FF0000';
+        const textWidth = context.measureText(text).width;
+        const xPosition = box.x + (box.width / 2) - (textWidth / 2);
+        context.fillText(text, xPosition, box.y - 10);
+      }
+    });
+  }, 100);
+});
