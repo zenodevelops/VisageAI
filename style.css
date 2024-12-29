@@ -37,7 +37,7 @@ canvas {
 #savedFaces {
   position: absolute;
   top: 20px; /* Match the video top position */
-  left: calc(25px + 720px + 20px); /* Position it to the right of the video with spacing */
+  left: calc(25px + 720px + 20px + 10px); /* Position it to the right of the video with spacing */
   width: 250px; /* Keep a fixed width */
   height: 500px; /* Automatically adjust height */
   max-height: calc(100% - 40px); /* Ensure it doesn't exceed video box height */
@@ -359,7 +359,7 @@ h1 {
 #controlCenter {
   position: absolute;
   top: calc(20px + 560px + 20px); /* Align below the Saved Faces container */
-  left: calc(25px + 720px + 20px); /* Align with the Saved Faces container */
+  left: calc(25px + 720px + 30px); /* Align with the Saved Faces container */
   width: 270px; /* Same width as Saved Faces */
   height: 180px; /* Fixed height */
   background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
@@ -414,9 +414,9 @@ h1 {
 /* Developer Info Card */
 #devInfoCard {
   position: absolute;
-  top: 20px;
-  right: 25px;
-  width: 250px;
+  top: 512px; /* Adjust so the bottom aligns with Control Center */
+  left: calc(25px + 720px + 30px + 270px + 50px); /* Position to the right of Control Center */
+  width: 300px; /* Adjust width as needed */
   height: auto;
   max-height: calc(100% - 40px);
   background-color: rgba(0, 0, 0, 0.3);
