@@ -3,6 +3,70 @@ const knownFaceDescriptors = [];
 const knownFaceNames = [];
 const uploadImageBtn = document.getElementById('uploadImageBtn');
 let showExpressions = false;
+const characters = "ZAHIDNYMUR";
+const charactersArray = characters.split("");
+
+// Matrix configuration
+const fontSize = 16;
+
+// Create the canvas and context
+const canvas = document.getElementById("matrix");
+const context = canvas.getContext("2d");
+
+// Set the canvas dimensions
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Calculate the number of columns
+const columns = Math.floor(canvas.width / fontSize);
+
+// Initialize the drop positions for each column at random heights
+const drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * canvas.height / fontSize));
+
+// Matrix animation
+function drawMatrix() {
+  // Clear the canvas with a translucent background
+  context.fillStyle = "rgba(0, 0, 0, 0.1)"; // Higher alpha for slower fade-out
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Set text color and font
+  context.fillStyle = "#0F0";
+  context.font = fontSize + "px monospace";
+
+  // Draw each character at its drop position
+  drops.forEach((y, index) => {
+    const text = charactersArray[Math.floor(Math.random() * charactersArray.length)];
+    const x = index * fontSize;
+
+    context.fillText(text, x, y * fontSize);
+
+    // Randomly reset the drop position after falling off screen
+    if (y * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[index] = 0;
+    }
+
+    // Increment the drop position more slowly
+    drops[index] += 0.5; // Reduce the increment value for slower movement
+  });
+}
+
+// Render loop
+function animateMatrix() {
+  drawMatrix();
+  setTimeout(() => {
+    requestAnimationFrame(animateMatrix);
+  }, 30); // Increase the timeout for slower updates
+}
+
+// Start the animation
+animateMatrix();
+
+// Adjust canvas size on window resize
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
