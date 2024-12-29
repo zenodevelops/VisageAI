@@ -11,10 +11,12 @@ body {
 
 canvas {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px; /* Match the video top position */
+  left: 25px; /* Match the video left position */
   z-index: 2; /* Ensure it is on top of the video */
   pointer-events: none; /* Ensure it doesn't block interactions */
+  width: 720px; /* Match the video width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 #matrix {
@@ -37,10 +39,13 @@ canvas {
   top: 10px;
   right: 10px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent background with slight black tint */
   width: 250px;
   border-radius: 8px;
+  border: 4px solid green; /* Thick green border */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: green; /* Set text color to green */
+  font-family: 'VT323', monospace; /* Retro computer font */
 }
 
 #savedFaces h3 {
@@ -48,17 +53,10 @@ canvas {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: #007BFF;
-  border-bottom: 2px solid #eee;
+  color: green; /* Set text color to green */
+  border-bottom: 2px solid rgba(0, 255, 0, 0.5); /* Light green underline */
   padding-bottom: 10px;
-}
-
-#savedFacesList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 300px;
-  overflow-y: auto;
+  font-family: 'VT323', monospace; /* Retro computer font */
 }
 
 #savedFacesList li {
@@ -66,32 +64,19 @@ canvas {
   align-items: center;
   padding: 10px;
   font-size: 16px;
-  color: #333;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  color: green; /* Text color to green */
+  background-color: rgba(0, 0, 0, 0.3); /* Transparent background for list items */
+  border: 2px solid green; /* Green border for list items */
   border-radius: 8px;
   margin-bottom: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'VT323', monospace; /* Retro computer font */
 }
 
 #savedFacesList li:hover {
   transform: scale(1.03);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#savedFacesList li img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 2px solid #007BFF;
-}
-
-#savedFacesList li span {
-  font-size: 16px;
-  font-weight: bold;
-  color: #555;
+  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5); /* Green shadow on hover */
 }
 
 /* Save Face Button */
@@ -120,14 +105,14 @@ canvas {
 /* Video Section */
 #video {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px; /* Add space from the top */
+  left: 25px; /* Add space from the left */
   z-index: 1; /* Ensure it appears above other elements */
-  border-radius: 2px;
+ /* Slightly rounded corners for aesthetics */
   border: 4px solid green; /* Thick green border */
   width: 720px; /* Optional: Adjust size as needed */
   height: auto; /* Maintain aspect ratio */
-  box-shadow: none; /* Remove shadow if any */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a modern look */
 }
 
 /* Scrollbar Styling for Saved Faces List */
@@ -242,12 +227,19 @@ h1 {
 /* Upload button */
 #uploadImageBtn {
   padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007BFF;
-  border: none;
-  border-radius: 4px;
+  font-size: 20px; /* Slightly larger font size for the retro look */
+  font-family: 'VT323', monospace; /* Apply retro font */
+  color: green; /* Green text color */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border: 4px solid green; /* Thick green border */
+  border-radius: 4px; /* Rounded corners */
   cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+#uploadImageBtn:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker transparent background on hover */
+  box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5); /* Green glow effect on hover */
 }
 
 /* Saved faces list */
