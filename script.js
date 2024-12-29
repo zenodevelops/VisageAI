@@ -3,7 +3,7 @@ const knownFaceDescriptors = [];
 const knownFaceNames = [];
 const uploadImageBtn = document.getElementById('uploadImageBtn');
 let showExpressions = false;
-const characters = "ZAHIDNYMUR";
+const characters = "zahidnymur";
 const charactersArray = characters.split("");
 
 // Matrix configuration
