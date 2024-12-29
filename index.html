@@ -12,38 +12,37 @@
 <body>
   <canvas id="matrix"></canvas>
   <video id="video" width="720" height="560" autoplay muted></video>
+  
+  <!-- Alert Mode Toggle -->
+  <div id="alertModeToggle">
+    <input type="checkbox" id="alertModeCheckbox">
+    <label for="alertModeCheckbox">Enable Alert Mode</label>
+  </div>
+  
   <button id="saveFaceBtn">Save Face</button>
 
-  <!--Save face button-->
+  <!-- Saved Faces Section -->
   <div id="savedFaces">
     <h3>Saved Faces</h3>
     <ul id="savedFacesList"></ul>
     <button id="uploadImageBtn">Upload Image</button>
   </div>
 
-
-  <!--start : facial expression toggle-->
+  <!-- Start: Facial Expression Toggle -->
   <div id="toggleSwitchContainer">
     <span id="toggleLabel">Show Expression</span>
     <input id="toggleSwitch" type="checkbox">
   </div>
+  <!-- End: Facial Expression Toggle -->
 
-  <!--start : facial expression toggle-->
-
-
-
-  <!--stat : alert mode container-->
+  <!-- Logs Container -->
   <div id="alertModeContainer">
-    <input type="checkbox" id="alertModeCheckbox">
-    <label for="alertModeCheckbox">Enable Alert Mode</label>
     <div id="logBox"></div>
     <button id="clearLogsButton">Clear Logs</button>
   </div>
-  <!--end : alert mode container-->
-  <!--Connectign script and jquery-->
+
+  <!-- Connecting script and jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script defer src="script.js"></script>
-
-
 </body>
 </html>
