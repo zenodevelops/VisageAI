@@ -117,6 +117,9 @@ saveFaceBtn.addEventListener('click', async () => {
 
 
      // Check if the face is already saved
+     if (knownFaceDescriptors.length === 0) {
+      return;
+     }
      if (knownFaceDescriptors.length > 0) {
       const labeledDescriptors = knownFaceDescriptors.map((desc, index) => {
         return new faceapi.LabeledFaceDescriptors(knownFaceNames[index], [desc]);
