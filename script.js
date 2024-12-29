@@ -19,37 +19,13 @@ function startVideo() {
     .catch(err => console.error('Error accessing the camera:', err));
 }
 
-// Added button to toggle expressions
-const toggleSwitchContainer = document.createElement('div');
-toggleSwitchContainer.style.position = 'absolute';
-toggleSwitchContainer.style.top = '10px';
-toggleSwitchContainer.style.left = '50%';
-toggleSwitchContainer.style.transform = 'translateX(-50%)';
-toggleSwitchContainer.style.display = 'flex';
-toggleSwitchContainer.style.alignItems = 'center';
-toggleSwitchContainer.style.gap = '10px';
+// toggle expression here js only 
 
-// Add label for the toggle 
-const toggleLabel = document.createElement('span');
-toggleLabel.textContent = 'Show Expression';
-toggleLabel.style.fontSize = '16px';
-toggleLabel.style.color = '#007BFF';
-toggleSwitchContainer.appendChild(toggleLabel);
-
-// Add the toggle input 
-const toggleSwitch = document.createElement('input');
-toggleSwitch.type = 'checkbox';
-toggleSwitch.style.width = '40px';
-toggleSwitch.style.height = '20px';
-toggleSwitch.style.cursor = 'pointer';
-toggleSwitchContainer.appendChild(toggleSwitch);
-
-document.body.appendChild(toggleSwitchContainer);
-
-// Toggle functionality for expressions 
 toggleSwitch.addEventListener('change', () => {
   showExpressions = toggleSwitch.checked;
 });
+
+
 
 const saveFaceBtn = document.getElementById('saveFaceBtn');
 
