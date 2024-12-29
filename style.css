@@ -44,7 +44,7 @@ canvas {
   background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent base */
   backdrop-filter: blur(10px); /* Add blur effect */
   border: 4px solid green; /* Thick green border */
-  border-radius: 8px; /* Slightly rounded corners */
+  border-radius: 0px; /* Slightly rounded corners */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
   color: green; /* Set text color to green */
   font-family: 'VT323', monospace; /* Retro computer font */
