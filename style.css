@@ -356,6 +356,8 @@ h1 {
   border-radius: 4px; /* Rounded corners for the track */
 }
 
+/*control center*/
+
 #controlCenter {
   position: absolute;
   top: calc(20px + 560px + 20px); /* Align below the Saved Faces container */
@@ -408,6 +410,48 @@ h1 {
   color: green; /* Match the design theme */
   font-family: 'VT323', monospace; /* Apply retro font */
 }
+
+
+#controlCenter div {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Reduce gap between checkbox and label */
+}
+
+#controlCenter label {
+  font-size: 14px; /* Slightly smaller font */
+  color: green;
+  font-family: 'VT323', monospace;
+}
+
+#controlCenter input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px; /* Adjusted size */
+  height: 18px; /* Adjusted size */
+  appearance: none; /* Remove default browser styling */
+  background-color: transparent; /* Initial transparent background */
+  border: 2px solid green; /* Green border */
+  border-radius: 4px; /* Optional rounded corners */
+  position: relative; /* Position for the custom tick */
+}
+
+#controlCenter input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px; /* Adjusted size */
+  height: 18px; /* Adjusted size */
+  appearance: none; /* Remove default browser styling */
+  background-color: transparent; /* Initial transparent background */
+  border: 2px solid green; /* Green border */
+  border-radius: 4px; /* Optional rounded corners */
+  transition: background-color 0.2s ease-in-out; /* Smooth transition for background change */
+}
+
+#controlCenter input[type="checkbox"]:checked {
+  background-color: green; /* Fill the box with green when checked */
+}
+
+
+
 
 /*adding dev info*/
 
@@ -483,21 +527,31 @@ h1 {
   filter: invert(73%) sepia(93%) saturate(344%) hue-rotate(120deg) brightness(99%) contrast(92%);
 }
 
-#controlCenter div {
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Reduce gap between checkbox and label */
-}
 
-#controlCenter label {
-  font-size: 14px; /* Slightly smaller font */
+
+/*adding title sytle */
+
+/* Title Section Styling */
+#titleSection {
+  position: absolute;
+  top: 40px; /* Align above the developer info section */
+  left: calc(25px + 720px + 300px + 70px); /* Align to the right of saved faces */
+  width: 300px; /* Match the width of the developer info card */
+  text-align: center;
   color: green;
   font-family: 'VT323', monospace;
+  z-index: 3;
 }
 
-#controlCenter input {
-  cursor: pointer;
-  width: 16px; /* Slightly smaller size */
-  height: 16px; /* Slightly smaller size */
+#titleSection h1 {
+  font-size: 100px; /* Adjust font size for better fit */
+  text-shadow: 0 4px 10px rgba(0, 255, 0, 0.5); /* Neon-like glow effect */
+  margin: 0;
 }
 
+#titleSection .description {
+  font-size: 16px; /* Slightly smaller than the title */
+  margin-top: 10px;
+  color: rgba(0, 255, 0, 0.8); /* Softer green for the description */
+  text-shadow: 0 2px 5px rgba(0, 255, 0, 0.3); /* Subtle glow for the description */
+}
