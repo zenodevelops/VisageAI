@@ -13,14 +13,6 @@
   <canvas id="matrix"></canvas>
   <video id="video" width="720" height="560" autoplay muted></video>
   
-  <!-- Alert Mode Toggle -->
-  <div id="alertModeToggle">
-    <input type="checkbox" id="alertModeCheckbox">
-    <label for="alertModeCheckbox">Enable Alert Mode</label>
-  </div>
-  
-  <button id="saveFaceBtn">Save Face</button>
-
   <!-- Saved Faces Section -->
   <div id="savedFaces">
     <h3>Saved Faces</h3>
@@ -28,12 +20,19 @@
     <button id="uploadImageBtn">Upload Image</button>
   </div>
 
-  <!-- Start: Facial Expression Toggle -->
-  <div id="toggleSwitchContainer">
-    <span id="toggleLabel">Show Expression</span>
-    <input id="toggleSwitch" type="checkbox">
+  <!-- Control Center Section -->
+  <div id="controlCenter">
+    <h3>Control Center</h3>
+    <button id="saveFaceBtn">Save Face</button>
+    <div>
+      <input id="toggleSwitch" type="checkbox">
+      <label for="toggleSwitch">Show Expression</label>
+    </div>
+    <div>
+      <input id="alertModeCheckbox" type="checkbox">
+      <label for="alertModeCheckbox">Enable Alert Mode</label>
+    </div>
   </div>
-  <!-- End: Facial Expression Toggle -->
 
   <!-- Logs Container -->
   <div id="alertModeContainer">
