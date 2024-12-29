@@ -8,20 +8,15 @@ Visage AI is a cutting-edge face recognition and expression analysis tool that b
 1. [Overview](#overview)  
 2. [Features](#features)  
 3. [Project Structure](#project-structure)  
-4. [Getting Started](#getting-started) 
-   - [Prerequisites](#prerequisites)  
-   - [Installation](#installation)  
-   - [Model Files](#model-files)  
-   - [Running the Project](#running-the-project)  
-5. [Usage](#usage)  
+4. [Usage](#usage)  
    - [Real-Time Camera Detection](#real-time-camera-detection)  
    - [Saving Faces](#saving-faces)  
    - [Uploading Images](#uploading-images)  
    - [Expression Toggle](#expression-toggle)  
    - [Alert Mode](#alert-mode)  
    - [Logs](#logs)  
-6. [Credits](#credits)   
-7. [License](#license)
+5. [Credits](#credits)   
+6. [License](#license)
 
 ---
 
