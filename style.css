@@ -44,7 +44,6 @@ canvas {
   background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent base */
   backdrop-filter: blur(10px); /* Add blur effect */
   border: 4px solid green; /* Thick green border */
-  border-radius: 0px; /* Slightly rounded corners */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
   color: green; /* Set text color to green */
   font-family: 'VT323', monospace; /* Retro computer font */
@@ -86,29 +85,6 @@ canvas {
   box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5); /* Green shadow on hover */
 }
 
-/* Save Face Button */
-#saveFaceBtn {
-  position: absolute;
-  top: calc(100vh - 60px); /* Adjust the vertical positioning to just above the dialog */
-  right: 500px; /* Align it to match the toggleSwitchContainer's position */
-  transform: translateY(-100%); /* Adjust for height of the button itself */
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #007BFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1001; /* Ensure it is above the toggleSwitchContainer */
-}
-
-#saveFaceBtn:hover {
-  background-color: #0056b3;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
 
 /* Video Section */
 #video {
@@ -199,34 +175,6 @@ h1 {
     height: 40px;
   }
 }
-
-/*start - toggle for expression */
-#toggleSwitchContainer {
-  position: absolute;
-  bottom: 10px;
-  right:500px; /* Positioned to the left of the log box */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-#toggleLabel {
-  font-size: 16px;
-  color: #007BFF;
-}
-
-#toggleSwitch {
-  width: 40px;
-  height: 20px;
-  cursor: pointer;
-}
-/*end - toggle for expression */
 
 
 
@@ -408,25 +356,51 @@ h1 {
   border-radius: 4px; /* Rounded corners for the track */
 }
 
-
-#alertModeToggle {
+#controlCenter {
   position: absolute;
-  top: calc(100vh - 100px); /* Adjust to place it above the Save Face button */
-  left: 70%; /* Center horizontally relative to the container */
-  transform: translate(-50%, -100%); /* Center horizontally and move it just above the button */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  padding: 10px;
+  top: calc(20px + 560px + 20px); /* Align below the Saved Faces container */
+  left: calc(25px + 720px + 20px); /* Align with the Saved Faces container */
+  width: 270px; /* Same width as Saved Faces */
+  height: 180px; /* Fixed height */
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Add blur effect */
   border: 4px solid green; /* Bold green border */
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
-  z-index: 1001; /* Ensure it appears above other elements */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+  padding: 10px; /* Reduce padding to save space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Reduce space between child elements */
+  overflow-y: hidden; /* Prevent content overflow */
+  z-index: 2; /* Ensure it's on top */
 }
 
-#alertModeToggle input {
+#controlCenter h3 {
+  font-size: 18px; /* Slightly smaller font */
+  font-weight: bold;
+  text-align: center;
+  color: green;
+  font-family: 'VT323', monospace; /* Retro font */
+  margin: 0; /* Remove bottom margin */
+  border-bottom: 2px solid rgba(0, 255, 0, 0.5); /* Light green underline */
+  padding-bottom: 5px; /* Reduce padding below the text */
+}
+
+#controlCenter button {
+  padding: 8px; /* Reduce padding */
+  font-size: 16px; /* Slightly smaller font size */
+  font-family: 'VT323', monospace; /* Retro font */
+  color: green;
+  background-color: transparent;
+  border: 4px solid green; /* Bold green border */
+  border-radius: 8px;
   cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#controlCenter button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5); /* Add green glow on hover */
 }
 
 #alertModeToggle label {
@@ -508,3 +482,22 @@ h1 {
   transform: scale(1.1);
   filter: invert(73%) sepia(93%) saturate(344%) hue-rotate(120deg) brightness(99%) contrast(92%);
 }
+
+#controlCenter div {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Reduce gap between checkbox and label */
+}
+
+#controlCenter label {
+  font-size: 14px; /* Slightly smaller font */
+  color: green;
+  font-family: 'VT323', monospace;
+}
+
+#controlCenter input {
+  cursor: pointer;
+  width: 16px; /* Slightly smaller size */
+  height: 16px; /* Slightly smaller size */
+}
+
