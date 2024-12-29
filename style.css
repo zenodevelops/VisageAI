@@ -434,3 +434,77 @@ h1 {
   color: green; /* Match the design theme */
   font-family: 'VT323', monospace; /* Apply retro font */
 }
+
+/*adding dev info*/
+
+/* Developer Info Card */
+#devInfoCard {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  width: 250px;
+  height: auto;
+  max-height: calc(100% - 40px);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 4px solid green;
+  border-radius: 0px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: green;
+  font-family: 'VT323', monospace;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+#devInfoCard h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: green;
+  border-bottom: 2px solid rgba(0, 255, 0, 0.5);
+  padding-bottom: 10px;
+}
+
+#devInfoCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#devInfoCard li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#devInfoCard .dev-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+#devInfoCard .dev-details span {
+  font-size: 18px;
+}
+
+#devInfoCard .dev-details a {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#devInfoCard .dev-details a img {
+  width: 24px;
+  height: 24px;
+  filter: invert(56%) sepia(78%) saturate(427%) hue-rotate(89deg) brightness(101%) contrast(97%);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+#devInfoCard .dev-details a img:hover {
+  transform: scale(1.1);
+  filter: invert(73%) sepia(93%) saturate(344%) hue-rotate(120deg) brightness(99%) contrast(92%);
+}
