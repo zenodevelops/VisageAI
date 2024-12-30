@@ -1,5 +1,11 @@
 # Visage AI
-Visage AI is a cutting-edge face recognition and expression analysis tool that blends modern artificial intelligence capabilities with a retro aesthetic. Designed to deliver real-time facial analysis, Visage AI can identify and track faces, recognize expressions, and provide insightful visual logs.
+
+
+![Demo-1](https://github.com/user-attachments/assets/e1246c9b-4346-42b9-b66c-b93468adbd43)
+
+![Demo-2](https://github.com/user-attachments/assets/0dc6ddce-2c74-4b2d-b32f-b2db804a3850)
+
+This project is a face recognition and expression analysis tool that blends modern artificial intelligence capabilities with a retro aesthetic. Designed to deliver real-time facial analysis, Visage AI can identify and track faces, recognize expressions, and provide insightful visual logs.
 
 ---
 
@@ -15,15 +21,12 @@ Visage AI is a cutting-edge face recognition and expression analysis tool that b
    - [Expression Toggle](#expression-toggle)  
    - [Alert Mode](#alert-mode)  
    - [Logs](#logs)  
-5. [Credits](#credits)   
-6. [License](#license)
-
+5. [Credits](#credits)
 ---
 
 ## Overview
 
-Visage AI harnesses the power of [face-api.js](https://github.com/justadudewhohacks/face-api.js) to detect, recognize, and analyze faces in real time or via uploaded images. The UI employs a retro “green terminal” design and features a Matrix-inspired background animation for a unique aesthetic.
-
+Visage AI uses the power of [face-api.js](https://github.com/justadudewhohacks/face-api.js) to detect, recognize, and analyze faces in real time or via uploaded images.
 ---
 
 ## Features
@@ -33,7 +36,6 @@ Visage AI harnesses the power of [face-api.js](https://github.com/justadudewhoha
 - **Expression Analysis**: Identifies and labels facial expressions (e.g., happy, sad, surprised).
 - **Upload & Detect**: Recognizes faces from uploaded images.
 - **Alert Mode**: Logs known faces in a dedicated panel and highlights recognized individuals in red.
-- **Retro UI**: Retro “green on black” interface with a scrolling Matrix effect.
 
 ---
 
@@ -75,5 +77,4 @@ Visage AI harnesses the power of [face-api.js](https://github.com/justadudewhoha
 ## Credits
 - **Developers**: Nymur Rahman and Zahid Hasan
 - **Face Detection & Recognition**: Powered by face-api.js  
-- **Design Inspiration**: Retro green-terminal aesthetic inspired by classic computer visuals and the Matrix theme.
 
